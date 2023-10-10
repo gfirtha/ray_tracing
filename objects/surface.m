@@ -15,6 +15,7 @@ classdef surface < room
     end
     methods (Abstract)
             draw_surface()
+           % reflect()
     end
 end
 
