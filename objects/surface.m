@@ -8,9 +8,12 @@ classdef surface < room
     end
     
     methods
-        function obj = surface()
+        function obj = surface(vertices, absorption_coeff)
             %SURFACE Construct an instance of this class
             %   Detailed explanation goes here
+            obj.vertices=vertices;
+            obj.absorption_coeff=absorption_coeff;
+            
         end
     end
     methods (Abstract)
