@@ -9,17 +9,31 @@ classdef ray_package < handle
     
     methods
         function obj = ray_package(source_in)
-            %RAY_PACKAGE Construct an instance of this class
-            %   Detailed explanation goes here
+            if nargin==0
+                obj.source=[];
+                obj.rays=[];
+        else
             obj.source = source_in;
-            
+            obj.rays=[];
+        end
+        end
+
+          function DrawRays(obj)
+            % Draw all rays contained in the Ray_package.
+            sourcePosition = obj.source.position;
+
+            for i = 1:numel(obj.rays)
+                ray = obj.rays(i);
+                ray.PlotRay(sourcePosition, 1); % Assuming 1 meter length for visualization.
+            end
+
+            xlabel('X');
+            ylabel('Y');
+            zlabel('Z');
+            grid on;
+            view(3); % Adjust the view as needed.
         end
         
-        function obj = step_time(obj)
-            %METHOD1 Summary of this method goes here
-            %   Detailed explanation goes here
-            outputArg = obj.Property1 + inputArg;
-        end
     end
 end
 
