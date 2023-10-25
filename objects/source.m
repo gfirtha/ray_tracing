@@ -18,7 +18,7 @@ classdef source < handle
             obj.ray_no = ray_no;
             switch dirchar
                 case 'monopole'
-                    obj.dirchar = @(x) x;
+                    obj.dirchar = @(x) 1;
                 case 'dipole'
                     obj.dirchar = @(x) cos(x);
             end
@@ -62,7 +62,7 @@ classdef source < handle
                 y = sin(azimuth) * cos(elevation);
                 z = sin(elevation);
                 currentDirection = [x; y; z];
-
+obj.dirchar(azimuth)
                 % Create a new ray object and add it to the Ray_package.
                 newRay = ray(obj.position, currentDirection , 0, [] , obj.dirchar(azimuth), inf);
                 RayPackage.add_ray(newRay);

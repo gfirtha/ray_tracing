@@ -33,7 +33,7 @@ classdef ray < handle
 
         function PlotRay(obj, origin)
             % Calculate the end point of the ray.
-            endPoint = origin + obj.amplitude * obj.direction;
+            endPoint = origin + abs(obj.amplitude)* obj.direction;
 
             % Plot the ray using quiver.
             quiver3(origin(1), origin(2), origin(3), endPoint(1) - origin(1), endPoint(2) - origin(2), endPoint(3) - origin(3), 0,'k');
