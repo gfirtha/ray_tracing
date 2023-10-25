@@ -3,6 +3,7 @@ classdef ray < handle
     %   Detailed explanation goes here
     
     properties
+        origin
         direction
         propagation_time
         frequency
@@ -11,9 +12,10 @@ classdef ray < handle
     end
     
     methods
-        function obj = ray(direction,propagation_time,frequency,amplitude,curvature)
+        function obj = ray(origin,direction,propagation_time,frequency,amplitude,curvature)
             %RAY Construct an instance of this class
             %   Detailed explanation goes here
+            obj.origin = origin;
             obj.direction = direction;
             obj.propagation_time=propagation_time;
             obj.frequency=frequency;
@@ -29,12 +31,12 @@ classdef ray < handle
 
         end
 
-         function PlotRay(obj, origin, rayLength)
+        function PlotRay(obj, origin)
             % Calculate the end point of the ray.
-            endPoint = origin + rayLength * obj.direction;
+            endPoint = origin + obj.amplitude * obj.direction;
 
             % Plot the ray using quiver.
-            quiver3(origin(1), origin(2), origin(3), endPoint(1) - origin(1), endPoint(2) - origin(2), endPoint(3) - origin(3), 0);
+            quiver3(origin(1), origin(2), origin(3), endPoint(1) - origin(1), endPoint(2) - origin(2), endPoint(3) - origin(3), 0,'k');
         end
 
     end

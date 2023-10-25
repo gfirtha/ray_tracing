@@ -18,13 +18,17 @@ classdef ray_package < handle
         end
         end
 
+        function obj = add_ray(obj, ray_in)
+                obj.rays = [obj.rays, ray_in];
+        end
+
           function DrawRays(obj)
             % Draw all rays contained in the Ray_package.
             sourcePosition = obj.source.position;
 
             for i = 1:numel(obj.rays)
                 ray = obj.rays(i);
-                ray.PlotRay(sourcePosition, 1); % Assuming 1 meter length for visualization.
+                ray.PlotRay(sourcePosition); 
             end
 
             xlabel('X');
