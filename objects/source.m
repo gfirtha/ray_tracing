@@ -40,17 +40,17 @@ classdef source < handle
 
           function RayPackage = GenerateRays_spherical(obj)
            % Generate sound rays from the source in all directions (3D sphere)
-        numRays=obj.ray_no;
-        RayPackage=ray_package();
-        RayPackage.source=obj;
-        RayPackage.rays=[];
+            numRays=obj.ray_no;
+            RayPackage=ray_package();
+            RayPackage.source=obj;
+            RayPackage.rays=[];
 
            for i = 1:numRays
                 % Generate random spherical coordinates (azimuth and elevation).
                 azimuth = 2 * pi * rand(); % Random azimuth angle [0, 2*pi]
                 elevation = asin(2 * rand() - 1); % Random elevation angle [-pi/2, pi/2]
 
-           % Convert spherical coordinates to a 3D direction vector.
+                % Convert spherical coordinates to a 3D direction vector.
                 x = cos(azimuth) * cos(elevation);
                 y = sin(azimuth) * cos(elevation);
                 z = sin(elevation);
