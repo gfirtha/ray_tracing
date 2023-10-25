@@ -2,9 +2,9 @@ clear
 close all
 addpath('objects')
 
-source1 = source([0,0,0]',[0,1,0]',1000,'dipole');
+source1 = source([0,0,0]',[0,1,0]',500,'quadrupole');
 
-rayPackage = source1.GenerateRays_spherical;
+rayPackage = source1.GenerateRays;
 %%
 figure
 hold on

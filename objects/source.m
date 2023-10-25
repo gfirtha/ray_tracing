@@ -21,6 +21,8 @@ classdef source < handle
                     obj.dirchar = @(x) 1;
                 case 'dipole'
                     obj.dirchar = @(x) cos(x);
+                case 'quadrupole'
+                    obj.dirchar = @(x) cos(2*x);
             end
         end
 
@@ -45,14 +47,12 @@ classdef source < handle
             obj.position=NewRay_no;
         end
 
-        function RayPackage = GenerateRays_spherical(obj)
+        function RayPackage = GenerateRays(obj)
             % Generate sound rays from the source in all directions (3D sphere)
-            numRays=obj.ray_no;
-            RayPackage=ray_package();
+            RayPackage = ray_package();
             RayPackage.source=obj;
-            RayPackage.rays=[];
 
-            for i = 1:numRays
+            for i = 1:obj.ray_no
                 % Generate random spherical coordinates (azimuth and elevation).
                 azimuth = 2 * pi * rand(); % Random azimuth angle [0, 2*pi]
                 elevation = asin(2 * rand() - 1); % Random elevation angle [-pi/2, pi/2]
@@ -62,26 +62,10 @@ classdef source < handle
                 y = sin(azimuth) * cos(elevation);
                 z = sin(elevation);
                 currentDirection = [x; y; z];
-obj.dirchar(azimuth)
                 % Create a new ray object and add it to the Ray_package.
                 newRay = ray(obj.position, currentDirection , 0, [] , obj.dirchar(azimuth), inf);
                 RayPackage.add_ray(newRay);
             end
-        end
-
-        function rotatedVector = CustomRotateVector(vector, axis, angle)
-            % Rotate a 3D vector around a specified axis by a given angle (in radians).
-
-            % Ensure the input vector and axis are 3D vectors.
-            assert(all(size(vector) == [3 1]) && all(size(axis) == [3 1]), 'Input vectors must be 3D.');
-
-            R = [cos(angle), -sin(angle), 0;
-                sin(angle), cos(angle), 0;
-                0, 0, 1];
-
-
-            % Apply the rotation matrix to the vector.
-            rotatedVector = R * vector;
         end
 
 
