@@ -67,37 +67,59 @@ classdef source < handle
             end
           end
 
-          function rayPackage = GenerateRays_oriented(obj)
-            % Generate sound rays from the source around the specified orientation.
+         function rotatedVector = CustomRotateVector(vector, axis, angle)
+    % Rotate a 3D vector around a specified axis by a given angle (in radians).
+    
+    % Ensure the input vector and axis are 3D vectors.
+    assert(all(size(vector) == [3 1]) && all(size(axis) == [3 1]), 'Input vectors must be 3D.');
 
-            
-            % Determine the number of rays to generate.
-            numRays = obj.ray_no;
-            
-            % Create a Ray_package to store the generated rays.
-            rayPackage = ray_package();
-            rayPackage.source = obj;
-            rayPackage.rays = [];
-            
-            % Generate rays around the specified orientation.
-            for i = 1:numRays
-                % Generate small variations in direction around the orientation.
-                angleVariation = 2 * pi * (rand() - 0.5); % Random angle variation [-pi, pi]
-                
-                % Rotate the orientation by the angle variation.
-                rotatedDirection = RotateVector(obj.orientation, [0; 0; 1], angleVariation);
-                
-                % Create a new ray object and add it to the Ray_package.
-                newRay = ray();
-                newRay.direction = rotatedDirection;
-                newRay.propagation_time = 0; % Initialize propagation time
-                newRay.frequency = 0; % Initialize frequency
-                newRay.amplitude = 0; % Initialize amplitude
-                newRay.curvature = 0; % Initialize curvature
-                rayPackage.rays = [rayPackage.rays, newRay];
-            end
-            
-        end
+    R = [cos(angle), -sin(angle), 0;
+     sin(angle), cos(angle), 0;
+     0, 0, 1];
+
+
+    % Apply the rotation matrix to the vector.
+    rotatedVector = R * vector;
+end
+
+
+        function rayPackage = GenerateRays_oriented(obj)
+    % Generate sound rays from the source around the specified orientation.
+
+    % Determine the number of rays to generate.
+    numRays = obj.ray_no;
+
+    % Create a Ray_package to store the generated rays.
+    rayPackage = ray_package();
+    rayPackage.source = obj;
+    rayPackage.rays = [];
+
+    % Get the source orientation vector.
+    orientation = obj.orientation;
+
+    % Generate rays around the specified orientation.
+    for i = 1:numRays
+        % Generate small variations in direction around the orientation.
+        angleVariation = 2 * pi * (rand() - 0.5); % Random angle variation [-pi, pi]
+
+        % Create a quaternion to represent the rotation.
+        q = axang2quat([orientation', angleVariation]);
+
+        % Rotate the default direction vector [0; 0; 1] using the quaternion.
+        rotatedDirection = quatrotate(q, [0, 0, 1]);
+
+        % Create a new ray object and add it to the Ray_package.
+        newRay = ray(rotatedDirection', 0, 0, 0, 0);
+        rayPackage.rays = [rayPackage.rays, newRay];
+        newRay.direction = rotatedDirection';
+        newRay.propagation_time = 0; % Initialize propagation time
+        newRay.frequency = 0; % Initialize frequency
+        newRay.amplitude = 0; % Initialize amplitude
+        newRay.curvature = 0; % Initialize curvature
+        rayPackage.rays = [rayPackage.rays, newRay];
+    end
+end
+
     end
 end
 
