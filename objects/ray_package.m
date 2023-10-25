@@ -30,12 +30,6 @@ classdef ray_package < handle
                 ray = obj.rays(i);
                 ray.PlotRay(sourcePosition); 
             end
-
-            xlabel('X');
-            ylabel('Y');
-            zlabel('Z');
-            grid on;
-            view(3); % Adjust the view as needed.
         end
         
     end

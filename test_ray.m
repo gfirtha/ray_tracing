@@ -10,3 +10,9 @@ figure
 hold on
 rayPackage.DrawRays;
 axis equal tight
+
+xlabel('X');
+ylabel('Y');
+zlabel('Z');
+grid on;
+view(3); % Adjust the view as needed.
