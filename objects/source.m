@@ -23,14 +23,13 @@ classdef source < handle
                     obj.dirchar = @(x) cos(x);
                 case 'quadrupole'
                     obj.dirchar = @(x) cos(2*x);
+                case 'cardioid'
+                    obj.dirchar = @(x) 1+cos(x);
+                case 'hypercardioid'
+                    obj.dirchar = @(x) 1+cos(x)-(1/2)*cos(x);
             end
         end
 
-        function outputArg = method1(obj,inputArg)
-            %METHOD1 Summary of this method goes here
-            %   Detailed explanation goes here
-            outputArg = obj.Property1 + inputArg;
-        end
 
         function obj = SetPosition(obj, NewPosition)
             if numel(NewPosition)~=3
