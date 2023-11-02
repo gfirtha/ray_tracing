@@ -6,10 +6,10 @@ classdef polygon < surface
     end
     
     methods
-        function obj = polygon(vx)
+        function obj = polygon(vx,alpha)
             %RECTANGLE Construct an instance of this class
             %   Detailed explanation goes here
-            obj.vertices = vx;
+            obj = obj@surface(vx,alpha);
         end
         
          function intersection = intersect(obj, ray_origin, ray_direction)
@@ -26,7 +26,7 @@ classdef polygon < surface
                 t = dot(obj.vertices(1, :) - ray_origin, normal) / denom;
                 intersection = ray_origin + t * ray_direction;
             else
-                intersection = []; % Ray is parallel to the plane
+                intersection = nan; % Ray is parallel to the plane
             end
          end
         

@@ -41,7 +41,8 @@ classdef surface < room
     end
     methods (Abstract)
             draw_surface()
-           % reflect()
+            intersect()
+            reflect()
     end
 end
 
