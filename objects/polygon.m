@@ -3,15 +3,17 @@ classdef polygon < surface
     %   Detailed explanation goes here
     
     properties
+     
     end
     
     methods
-        function obj = polygon(vx)
-            %RECTANGLE Construct an instance of this class
+        function obj = polygon(vertices, absorption_coeff)
+            %SURFACE Construct an instance of this class
             %   Detailed explanation goes here
-            obj.vertices = vx;
+            obj.vertices=vertices;
+            obj.absorption_coeff=absorption_coeff;
+            
         end
-        
          function intersection = intersect(obj, ray_origin, ray_direction)
             % Calculate the intersection of the ray with the plane defined by the vertices of the polygon
             
