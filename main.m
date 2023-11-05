@@ -47,6 +47,4 @@ room0.add_surface(floor, 0)
 figure
 room0.draw_room
 
-source1 = source([0.1,0.1,0.1],[0,0,0],5e3);
-ray_package(source1);
 %clear all

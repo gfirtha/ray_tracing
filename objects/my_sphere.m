@@ -1,4 +1,4 @@
-classdef my_sphere < handle
+classdef my_sphere < surface
     properties
         center
         radius
@@ -12,7 +12,7 @@ classdef my_sphere < handle
         
         function normal = CalculateNormal(obj, intersectionPoint)
             % For a sphere, the normal at any point on the surface is the vector from the center to that point
-            normal = (intersectionPoint - obj.Center) / norm(intersectionPoint - obj.Center);
+            normal = (intersectionPoint - obj.center) / norm(intersectionPoint - obj.center);
         end
 
         function intersection = intersect(obj, ray_origin, ray_direction)
