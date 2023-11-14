@@ -4,16 +4,16 @@ classdef scheduler
         raypackage 
         surfaces % Store references to all surfaces
         clock % Current clock signal
-        timeStep % Time step duration
+        step % Time step duration
     end
     
     methods
 
-         function obj = scheduler(rayPackages, surfaces, timeStep)
+         function obj = scheduler(rayPackages, surfaces, step)
             obj.raypackage = rayPackages;
             obj.surfaces = surfaces;
             obj.clock = 0; % Initialize the clock
-            obj.timeStep = timeStep; % Set the time step duration
+            obj.step = step; % Set the time step duration
          end
 
       function propagate(obj)
@@ -30,16 +30,16 @@ classdef scheduler
                     currentDirection = rayPackage.getRayDirection(j);
 
                     for k = 1:numel(obj.surfaces)
-                        surface = obj.surfaces(k);
+                        surface = obj.surfaces{k};
 
                         if isa(surface, 'polygon')
                             % Calculate the intersection with a polygon surface
-                            intersection = surface.intersect(surface(k),currentOrigin,currentDirection);
+                            intersection = surface.intersect(currentOrigin,currentDirection);
                            if ~isempty(intersection)
                         % Update the ray's properties based on the intersection
                         rayPackage.setRayOrigin(j, intersection);
                         % Reflect the ray from the wall
-                        surface.reflect(surface(k),ray);
+                        surface.reflect(ray);
                         break; % Break the loop after reflecting the ray
                            end   
 
@@ -56,23 +56,33 @@ classdef scheduler
 
                         % Add other surface types as needed
 
-                        if ~isempty(intersection)
+                         if ~isempty(intersection)
                             % Update the ray's properties based on the intersection
                             rayPackage.setRayOrigin(j, intersection);
                             % Further ray interactions or updates can be done here
-                            break;
-                        end
+                                 break;
+                         end
                     end
 
                     if isempty(intersection)
                         % If no intersection, move the ray to the next position
-                        nextPosition = currentOrigin + currentDirection * obj.timeStep;
-                        rayPackage.setRayOrigin(j, nextPosition);
+                        nextPosition = currentOrigin + currentDirection * obj.step;
+                        rayPackage.setRayOrigin(j, nextPosition);  
                     end
                 end
             end
 
-            obj.clock = obj.clock + obj.timeStep;
+      
+
+            rayss=rayPackage.getRays();
+            last_ray=rayss(end);
+            hold on;
+            last_ray.PlotRay(intersection);
+            title('Last Propagated Ray');
+            hold off;
+
+
+            obj.clock = obj.clock + obj.step;
         end
     end
  end

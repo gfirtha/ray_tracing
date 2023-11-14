@@ -98,7 +98,7 @@ centroid = mean(all_vertices);
 
 % Create a source at the midpoint of the house
 source_position = centroid;
-source1 = source(source_position, [0, 0, 0], 5e2, 'monopole');
+source1 = source(source_position, [0, 0, 0], 2, 'monopole');
 
 % % Create a source at a specific position
 % source_position = [0.1, 0.1, 0.1];
@@ -108,7 +108,7 @@ source1 = source(source_position, [0, 0, 0], 5e2, 'monopole');
 rayPackage = source1.GenerateRays();
 
 % Propagate the rays in the environment
-Scheduler = scheduler(rayPackage, room0.surfaces, 0.1); % Time step of 0.1 (adjust as needed)
+Scheduler = scheduler(rayPackage, room0.surfaces, 1); %1 step
 Scheduler.propagate(); % Simulate ray propagation
 
 % Display the propagated rays
