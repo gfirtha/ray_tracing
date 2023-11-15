@@ -47,6 +47,7 @@ classdef ray < handle
 
 
         function PlotRay(obj, varargin)
+              origin = obj.origin;
              if length(varargin) == 0
                 % Calculate the end point of the ray.
                 endPoint = obj.origin + abs(obj.amplitude)* obj.direction;
@@ -54,7 +55,7 @@ classdef ray < handle
                 endPoint = varargin{1};
             end
             % Plot the ray using quiver.
-            quiver3(obj.origin(1), obj.origin(2), obj.origin(3), endPoint(1) - obj.origin(1), endPoint(2) - obj.origin(2), endPoint(3) - obj.origin(3), 0,'k');
+            quiver3(obj.origin(1), obj.origin(2), obj.origin(3), endPoint(1) - obj.origin(1), endPoint(2) - origin(2), endPoint(3) - origin(3), 0,'k');
         end
     end
 end
