@@ -30,16 +30,16 @@ classdef scheduler
                     currentDirection = rayPackage.getRayDirection(j);
 
                     for k = 1:numel(obj.surfaces)
-                        surface = obj.surfaces(k);
+                        surface = obj.surfaces{k};
 
                         if isa(surface, 'polygon')
                             % Calculate the intersection with a polygon surface
-                            intersection = surface.intersect(surface(k),currentOrigin,currentDirection);
+                            intersection = surface.intersect(ray);
                            if ~isempty(intersection)
                         % Update the ray's properties based on the intersection
                         rayPackage.setRayOrigin(j, intersection);
                         % Reflect the ray from the wall
-                        surface.reflect(surface(k),ray);
+                        rayPackage.setRayDirection( surface.reflect(ray));
                         break; % Break the loop after reflecting the ray
                            end   
 
