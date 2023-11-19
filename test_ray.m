@@ -28,14 +28,14 @@ spheres = my_sphere.empty(numSpheres, 0);
 for i = 1:numSpheres
     center = randi([-20, 20], 1, 3);  % Random center coordinates within the range
     radius = randi([1, 5]);  % Random radius between 1 and 5
-    spheres(i) = my_sphere(center, radius);
+    spheres(i) = my_sphere(center, radius,0.5);
 end
 
 % Plotting all spheres
 figure;
 hold on;
 for i = 1:numSpheres
-    spheres(i).draw();
+    spheres(i).draw_surface();
 end
 axis equal;
 xlabel('X');
@@ -53,11 +53,11 @@ wall1 = [0,0,0; 1,0,0; 1,0,1; 0,0,1];
 wall2 = [0,1,0; 1,1,0; 1,1,1; 0,1,1];
 wall3 = [0,0,0; 0,1,0; 0,1,1; 0,0,1];
 wall4 = [1,0,0; 1,1,0; 1,1,1; 1,0,1];
-% floor = [0,0,0; 0,1,0; 1,1,0; 1,0,0];
-% roof1 = [1,0,1; 0,0,1; 0.5,0.5,1.5];
-% roof2 = [0,0,1; 0,1,1; 0.5,0.5,1.5];
-% roof3 = [0,1,1; 1,1,1; 0.5,0.5,1.5];
-% roof4 = [1,1,1; 1,0,1; 0.5,0.5,1.5];
+floor = [0,0,0; 0,1,0; 1,1,0; 1,0,0];
+roof1 = [1,0,1; 0,0,1; 0.5,0.5,1.5];
+roof2 = [0,0,1; 0,1,1; 0.5,0.5,1.5];
+roof3 = [0,1,1; 1,1,1; 0.5,0.5,1.5];
+roof4 = [1,1,1; 1,0,1; 0.5,0.5,1.5];
 
 % Scaling factor for the house
 scaling_factor = 1;
@@ -98,7 +98,7 @@ centroid = mean(all_vertices);
 
 % Create a source at the midpoint of the house
 source_position = centroid;
-source1 = source(source_position, [0, 0, 0], 2, 'monopole');
+source1 = source(source_position, [0, 0, 0], 1, 'monopole');
 
 % % Create a source at a specific position
 % source_position = [0.1, 0.1, 0.1];

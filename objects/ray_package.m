@@ -53,8 +53,12 @@ classdef ray_package < handle
                 obj.rays = [obj.rays, ray_in];
         end
 
-
-
+        function EliminateRays(obj)
+            for i = 1:nume1(obj.rays)
+                ray = obj.rays(i);
+                ray.EliminiateRay();
+            end
+        end
           function DrawRays(obj)
             % Draw all rays contained in the Ray_package.
             sourcePosition = obj.source.position;

@@ -1,12 +1,11 @@
 classdef my_sphere < surface
     properties
-        center
         radius
     end
     
     methods
-        function obj = my_sphere(center, radius)
-            obj.center = center;
+        function obj = my_sphere(center, radius, alpha)
+            obj = obj@surface(center,alpha);
             obj.radius = radius;
         end
         
@@ -36,12 +35,20 @@ classdef my_sphere < surface
             end
          end
 
+         function reflect(obj, ray, intersection)
+         v = ray.direction - ray.origin;
+         x = intersection;
+         c = obj.center;
+         w = 2*dot(v,x-c)*(x-c)-v;
+         ray.setDirection(w);
+         ray.setOirigin(intersection);
+         end
 
-        function draw(obj)
+        function draw_surface(obj)
             [x, y, z] = sphere; % MATLAB's sphere function to get the coordinates
-            x = x * obj.radius + obj.center(1);
-            y = y * obj.radius + obj.center(2);
-            z = z * obj.radius + obj.center(3);
+            x = x * obj.radius + obj.vertices(1);
+            y = y * obj.radius + obj.vertices(2);
+            z = z * obj.radius + obj.vertices(3);
             surf(x, y, z);
             axis equal tight;
         end

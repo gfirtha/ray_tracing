@@ -1,11 +1,10 @@
 classdef ray < handle
-    %RAY Summary of this class goes here
-    %   Detailed explanation goes here
 
     properties
         origin
         direction
         propagation_time
+        distance
         frequency
         amplitude
         curvature
@@ -44,8 +43,17 @@ classdef ray < handle
             obj.origin = newOrigin;
         end
 
-
-
+        function EliminateRay(obj)
+            eps=[];
+                if obj.amplitude<eps
+                obj=[];
+            end
+        end
+        
+        function decay_factor = CalcDecayFactor(obj,propagation_time,frequency)
+        obj.distance=obj.intersection_point-obj.origin; %ha ez úgyis mindig csak reflectelés-kor lesz meghívva akkor issue lehet
+        obj.amplitude=obj.amplitude/obj.distance^2;
+        end
         function PlotRay(obj, varargin)
              if length(varargin) == 0
                 % Calculate the end point of the ray.

@@ -9,23 +9,17 @@ classdef surface < room
     
     methods
         function obj = surface(vertices, absorption_coeff)
-            %SURFACE Construct an instance of this class
-            %   Detailed explanation goes here
             obj.vertices=vertices;
             obj.absorption_coeff=absorption_coeff;
             
         end
-
  
-
-        
-
     end
     methods (Abstract)
             draw_surface()
             intersect()
             reflect()
-            CalculateNormal()
-            ComputeReflectedDirection()
+            % CalculateNormal()
+            % ComputeReflectedDirection()
     end
 end

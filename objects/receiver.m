@@ -12,7 +12,16 @@ classdef receiver < handle
             if nargin == 3
                 obj.volume = volume;
                 obj.position = position;
-                obj.mic_chars = micChars;
+                switch micChars
+                case 'monopole'
+                    obj.mic_chars = @(x) 1;
+                case 'dipole'
+                    obj.mic_chars = @(x) cos(x);
+                case 'cardioid'
+                    obj.mic_chars = @(x) 1+cos(x);
+                case 'hypercardioid'
+                    obj.mic_chars = @(x) 1+cos(x)-(1/2)*cos(x);
+                end 
                 obj.ray_counter = 0; % Initialize the ray counter
             else
                 error('Receiver properties (volume, position, mic_chars) must be provided.');

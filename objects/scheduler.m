@@ -26,7 +26,11 @@ classdef scheduler
 
                 for j = 1:numel(Rays)
                     ray = Rays(j);
-                    hold on;ray.PlotRay(ray.origin);
+                    hold on;
+                    ray.PlotRay(ray.origin);
+                    % Implement amplitude decay based on distance traveled
+                    decayFactor = CalculateDecayFactor(ray.distance);
+                    ray.amplitude = ray.amplitude * decayFactor;
                     for k = 1:numel(obj.surfaces)
                         surface = obj.surfaces{k};
 
@@ -36,10 +40,6 @@ classdef scheduler
 
                             if ~isempty(intersection)
                                 surface.reflect(ray, intersection);
-                                % Update the ray's properties based on the intersection
-                              %  rayPackage.setRayOrigin(j, intersection);
-                                % Reflect the ray from the wall
-                               % surface.reflect(ray);
                                 break; % Break the loop after reflecting the ray
                             end
 
@@ -63,26 +63,8 @@ classdef scheduler
                             break;
                         end
                     end
-
-%                     if isempty(intersection)
-%                         % If no intersection, move the ray to the next position
-%                         nextPosition = currentOrigin + currentDirection * obj.step;
-%                         rayPackage.setRayOrigin(j, nextPosition);
-%                     end
                 end
             end
-
-
-
-%             rayss=rayPackage.getRays();
-%             last_ray=rayss(end);
-%             hold on;
-%             last_ray.PlotRay(intersection);
-%             title('Last Propagated Ray');
-%             hold off;
-% 
-% 
-%             obj.clock = obj.clock + obj.step;
         end
     end
 end
