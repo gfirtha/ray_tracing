@@ -55,9 +55,13 @@ hold on
 % Generate rays from the source
 rayPackage = source1.GenerateRays();
 
+fs = 44.1e3;
+Nt = 1024;
+freq = (0:Nt-1)/Nt*fs;
+
 % Propagate the rays in the environment
 Scheduler = scheduler(rayPackage, room0.surfaces, 1); %1 step
-for n = 1 : 20
+for n = 1 : 100
     Scheduler.propagate(); % Simulate ray propagation
 end
 % Display the propagated rays
