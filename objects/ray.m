@@ -51,8 +51,8 @@ classdef ray < handle
         end
         
         function decay_factor = CalcDecayFactor(obj,propagation_time,frequency)
-        obj.distance=obj.intersection_point-obj.origin; %ha ez úgyis mindig csak reflectelés-kor lesz meghívva akkor issue lehet
-        obj.amplitude=obj.amplitude/obj.distance^2;
+            obj.distance=obj.intersection_point-obj.origin; %ha ez úgyis mindig csak reflectelés-kor lesz meghívva akkor issue lehet
+            obj.amplitude=obj.amplitude/obj.distance^2;
         end
         
         function PlotRay(obj, varargin)

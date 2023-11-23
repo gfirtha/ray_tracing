@@ -28,9 +28,6 @@ classdef scheduler
                     ray = Rays(j);
                     hold on;
                     ray.PlotRay(ray.origin);
-                    % Implement amplitude decay based on distance traveled
-                    decayFactor = CalculateDecayFactor(ray.distance);
-                    ray.amplitude = ray.amplitude * decayFactor;
                     for k = 1:numel(obj.surfaces)
                         surface = obj.surfaces{k};
 
@@ -39,6 +36,15 @@ classdef scheduler
                             intersection = surface.intersect(ray);
 
                             if ~isempty(intersection)
+                                % Ide a terjedési csillapítás és frekvencia
+                                % függő fázisváltozás
+                                % D = intersection - origin
+                                % dA = decayFactor
+                                % dFi = D/c*2*pi*freq
+                                %ray.amplitude = ray.amplitude * decayFactor*exp(-1i*dFi);
+
+                                % Implement amplitude decay based on distance traveled
+                                %decayFactor = CalculateDecayFactor(ray.distance);
                                 surface.reflect(ray, intersection);
                                 break; % Break the loop after reflecting the ray
                             end

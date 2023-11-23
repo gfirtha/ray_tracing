@@ -36,12 +36,12 @@ classdef my_sphere < surface
          end
 
          function reflect(obj, ray, intersection)
-         v = ray.direction - ray.origin;
-         x = intersection;
-         c = obj.center;
-         w = 2*dot(v,x-c)*(x-c)-v;
-         ray.setDirection(w);
-         ray.setOirigin(intersection);
+            v = ray.direction - ray.origin;
+            x = intersection;
+            c = obj.center;
+            w = 2*dot(v,x-c)*(x-c)-v;
+            ray.setDirection(w);
+            ray.setOirigin(intersection);
          end
 
         function draw_surface(obj)
