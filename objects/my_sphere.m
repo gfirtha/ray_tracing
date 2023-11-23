@@ -4,8 +4,8 @@ classdef my_sphere < surface
     end
     
     methods
-        function obj = my_sphere(center, radius, alpha)
-            obj = obj@surface(center,alpha);
+        function obj = my_sphere(center, radius, alpha,imp,R)
+            obj = obj@surface(center,alpha,imp,R);
             obj.radius = radius;
         end
         

@@ -6,8 +6,8 @@ classdef polygon < surface
     end
 
     methods
-        function obj = polygon(vx,alpha)
-            obj = obj@surface(vx,alpha);
+        function obj = polygon(vx,alpha,imp,R)
+            obj = obj@surface(vx,alpha,imp,R);
         end
 
         function intersection = intersect(obj, ray)

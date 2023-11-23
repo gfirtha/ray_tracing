@@ -24,12 +24,12 @@ top = scaling_factor * top;
 
 % Create the room and add surfaces to it
 room0 = room();
-room0.add_surface(wall1, 0);
-room0.add_surface(wall2, 0);
-room0.add_surface(wall3, 0);
-room0.add_surface(wall4, 0);
-room0.add_surface(floor, 0);
-room0.add_surface(top, 0);
+room0.add_surface(wall1, 0,1,1);
+room0.add_surface(wall2, 0,1,1);
+room0.add_surface(wall3, 0,1,1);
+room0.add_surface(wall4, 0,1,1);
+room0.add_surface(floor, 0,1,1);
+room0.add_surface(top, 0,1,1);
 
 
 % Plot the room

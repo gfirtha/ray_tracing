@@ -12,7 +12,7 @@ classdef ray < handle
     end
 
     methods
-        function obj = ray(origin,direction,propagation_time,frequency,amplitude,curvature)
+        function obj = ray(origin,direction,propagation_time,frequency,amplitude,curvature,distance)
             %RAY Construct an instance of this class
             obj.origin = origin;
             obj.direction = direction;
@@ -20,6 +20,7 @@ classdef ray < handle
             obj.frequency=frequency;
             obj.amplitude=amplitude;
             obj.curvature=curvature;
+            obj.distance=distance;
         end
 
 
@@ -50,10 +51,10 @@ classdef ray < handle
             end
         end
         
-        function decay_factor = CalcDecayFactor(obj,propagation_time,frequency)
-            obj.distance=obj.intersection_point-obj.origin; %ha ez úgyis mindig csak reflectelés-kor lesz meghívva akkor issue lehet
-            obj.amplitude=obj.amplitude/obj.distance^2;
-        end
+        % function decay_factor = CalcDecayFactor(obj,propagation_time,frequency)
+        %     obj.distance=obj.intersection_point-obj.origin; %ha ez úgyis mindig csak reflectelés-kor lesz meghívva akkor issue lehet
+        %     obj.amplitude=obj.amplitude/obj.distance^2;
+        % end
         
         function PlotRay(obj, varargin)
              if length(varargin) == 0

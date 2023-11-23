@@ -23,7 +23,7 @@ classdef scheduler
                 rayPackage = obj.raypackage(i);
                 Rays = rayPackage.getRays();
                 intersection = []; % Initialize intersection variable
-
+                eps=0.0001;
                 for j = 1:numel(Rays)
                     ray = Rays(j);
                     hold on;
@@ -38,13 +38,28 @@ classdef scheduler
                             if ~isempty(intersection)
                                 % Ide a terjedési csillapítás és frekvencia
                                 % függő fázisváltozás
-                                % D = intersection - origin
-                                % dA = decayFactor
-                                % dFi = D/c*2*pi*freq
-                                %ray.amplitude = ray.amplitude * decayFactor*exp(-1i*dFi);
+                                c=343;                                        %ezekhez majd gettereket és settereket írni
+                                D = norm(intersection - ray.origin);
+                                ray.distance = ray.distance+D;
+                                ray.propagation_time = ray.propagation_time+D/c;
+                                %decay factor inicailzálás
+                                decayFactor = ones(1024,1);                    %ide is valahogy a frek tengelyt átadni
+                                decayFactor = decayFactor./D;
 
-                                % Implement amplitude decay based on distance traveled
-                                %decayFactor = CalculateDecayFactor(ray.distance);
+
+                                fs = 44.1e3;
+                                Nt = 1024;
+                                freq = (0:Nt-1)/Nt*fs;
+                                  dA = decayFactor;
+
+
+                                dFi = D/c*2*pi*freq;
+                                ray.amplitude = ray.amplitude * dA * exp(-1i*dFi);
+                                %ezután lehetne egy if, hogy ha eps érték
+                                %alá esik az amplitúdó akkor ray elimináció
+                                % if ray.amplitude<eps
+                                %     EliminateRays;
+                                % end
                                 surface.reflect(ray, intersection);
                                 break; % Break the loop after reflecting the ray
                             end
@@ -72,6 +87,8 @@ classdef scheduler
                 end
             end
         end
+
+        
     end
 end
 

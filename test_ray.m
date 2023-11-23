@@ -28,7 +28,7 @@ spheres = my_sphere.empty(numSpheres, 0);
 for i = 1:numSpheres
     center = randi([-20, 20], 1, 3);  % Random center coordinates within the range
     radius = randi([1, 5]);  % Random radius between 1 and 5
-    spheres(i) = my_sphere(center, radius,0.5);
+    spheres(i) = my_sphere(center, radius,0.5,1,1);
 end
 
 % Plotting all spheres

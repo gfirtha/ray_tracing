@@ -62,8 +62,8 @@ classdef source < handle
                 z = sin(elevation);
                 currentDirection = [x; y; z];
                 % Create a new ray object and add it to the Ray_package.
-                newRay = ray(obj.position, currentDirection , 0, [] , obj.dirchar(azimuth), inf);
-                RayPackage.add_ray(newRay);
+                newRay = ray(obj.position, currentDirection , 0, [] , obj.dirchar(azimuth), inf,0);
+                RayPackage.add_ray(newRay); %ide a konstruktorba kéne megadni a frek tengelyt nem?
             end
         end
 
