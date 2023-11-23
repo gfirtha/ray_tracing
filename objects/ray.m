@@ -54,6 +54,7 @@ classdef ray < handle
         obj.distance=obj.intersection_point-obj.origin; %ha ez úgyis mindig csak reflectelés-kor lesz meghívva akkor issue lehet
         obj.amplitude=obj.amplitude/obj.distance^2;
         end
+        
         function PlotRay(obj, varargin)
              if length(varargin) == 0
                 % Calculate the end point of the ray.
