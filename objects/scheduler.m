@@ -38,7 +38,7 @@ classdef scheduler
                             if ~isempty(intersection)
                                 % Ide a terjedési csillapítás és frekvencia
                                 % függő fázisváltozás
-                                c=343;                                        %ezekhez majd gettereket és settereket írni
+                                c=343;                                        %TODO:ezekhez majd gettereket és settereket írni
                                 D = norm(intersection - ray.origin);
                                 ray.distance = ray.distance+D;
                                 ray.propagation_time = ray.propagation_time+D/c;
@@ -49,8 +49,9 @@ classdef scheduler
 
                                 fs = 44.1e3;
                                 Nt = 1024;
-                                freq = (0:Nt-1)/Nt*fs;
-                                  dA = decayFactor;
+                                freq = (0:Nt-1)/Nt*fs;   %tehát itt ez a rész ami kicsit homály, 
+                                %hogy hogyan lehetne frek függővé tenni a delay factort
+                                dA = decayFactor;
 
 
                                 dFi = D/c*2*pi*freq;
