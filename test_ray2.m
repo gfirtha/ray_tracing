@@ -60,7 +60,7 @@ Nt = 1024;
 freq = (0:Nt-1)/Nt*fs;
 
 % Propagate the rays in the environment
-Scheduler = scheduler(rayPackage, room0.surfaces, 1); %1 step
+Scheduler = scheduler(rayPackage, room0.surfaces, 1, freq); %1 step
 for n = 1 : 100
     Scheduler.propagate(); % Simulate ray propagation
 end

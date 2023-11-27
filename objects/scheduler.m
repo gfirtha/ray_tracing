@@ -5,15 +5,17 @@ classdef scheduler
         surfaces % Store references to all surfaces
         clock % Current clock signal
         step % Time step duration
+        freq_axis
     end
 
     methods
 
-        function obj = scheduler(rayPackages, surfaces, step)
+        function obj = scheduler(rayPackages, surfaces, step, freq)
             obj.raypackage = rayPackages;
             obj.surfaces = surfaces;
             obj.clock = 0; % Initialize the clock
             obj.step = step; % Set the time step duration
+            obj.freq_axis = freq;
         end
 
         function propagate(obj)
@@ -47,14 +49,12 @@ classdef scheduler
                                 decayFactor = decayFactor./D;
 
 
-                                fs = 44.1e3;
-                                Nt = 1024;
-                                freq = (0:Nt-1)/Nt*fs;   %tehát itt ez a rész ami kicsit homály, 
+                                %tehát itt ez a rész ami kicsit homály, 
                                 %hogy hogyan lehetne frek függővé tenni a delay factort
                                 dA = decayFactor;
 
 
-                                dFi = D/c*2*pi*freq;
+                                dFi = D/c*2*pi*obj.freq_axis;
                                 ray.amplitude = ray.amplitude * dA * exp(-1i*dFi);
                                 %ezután lehetne egy if, hogy ha eps érték
                                 %alá esik az amplitúdó akkor ray elimináció
