@@ -42,20 +42,21 @@ classdef scheduler
                                 % függő fázisváltozás
                                 c=343;                                        %TODO:ezekhez majd gettereket és settereket írni
                                 D = norm(intersection - ray.origin);
+                                
+                                
+                                dA = ones(1024,1)*ray.distance./(ray.distance+D);
+                                
                                 ray.distance = ray.distance+D;
                                 ray.propagation_time = ray.propagation_time+D/c;
                                 %decay factor inicailzálás
-                                decayFactor = ones(1024,1);                    %ide is valahogy a frek tengelyt átadni
-                                decayFactor = decayFactor./D;
-
 
                                 %tehát itt ez a rész ami kicsit homály, 
                                 %hogy hogyan lehetne frek függővé tenni a delay factort
-                                dA = decayFactor;
+
 
 
                                 dFi = D/c*2*pi*obj.freq_axis;
-                                ray.amplitude = ray.amplitude * dA * exp(-1i*dFi);
+                                ray.amplitude = ray.amplitude.* dA.* exp(-1i*dFi);
                                 %ezután lehetne egy if, hogy ha eps érték
                                 %alá esik az amplitúdó akkor ray elimináció
                                 % if ray.amplitude<eps

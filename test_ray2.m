@@ -57,7 +57,7 @@ rayPackage = source1.GenerateRays();
 
 fs = 44.1e3;
 Nt = 1024;
-freq = (0:Nt-1)/Nt*fs;
+freq = (0:Nt-1)'/Nt*fs;
 
 % Propagate the rays in the environment
 Scheduler = scheduler(rayPackage, room0.surfaces, 1, freq); %1 step
