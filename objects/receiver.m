@@ -22,9 +22,9 @@ classdef receiver < my_sphere
            
         end
 
-         function ReceiveRay(obj, ray)
+        function ReceiveRay(obj, ray_origin,ray_direction)
             % Check if the ray intersects the volume of the receiver.
-            if IsInsideReceiverVolume(ray, obj)
+            if ~isempty(obj@intersect(obj,ray_origin,ray_direction))
                 % Increment the ray counter.
                 obj.ray_counter = obj.ray_counter + 1;
 

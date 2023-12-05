@@ -25,7 +25,6 @@ classdef scheduler
                 rayPackage = obj.raypackage(i);
                 Rays = rayPackage.getRays();
                 intersection = []; % Initialize intersection variable
-                eps=0.0001;
                 for j = 1:numel(Rays)
                     ray = Rays(j);
                     hold on;
@@ -62,6 +61,7 @@ classdef scheduler
                                 % if ray.amplitude<eps
                                 %     EliminateRays;
                                 % end
+                                rayPackage.EliminateRay(rayPackage,j);
                                 surface.reflect(ray, intersection);
                                 break; % Break the loop after reflecting the ray
                             end

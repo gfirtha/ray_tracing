@@ -48,15 +48,27 @@ classdef ray_package < handle
             obj.rays(rayIndex).origin = newOrigin;
         end
 
+        function rayAmplitude = getRayAmplitude(obj, rayIndex)
+            rayAmplitude=obj.rays(rayIndex).amplitude;
+        end
+
+
 
         function obj = add_ray(obj, ray_in)
                 obj.rays = [obj.rays, ray_in];
         end
 
-        function EliminateRays(obj)
+        function EliminateAllRays(obj)
             for i = 1:nume1(obj.rays)
                 ray = obj.rays(i);
                 ray.EliminiateRay();
+            end
+        end
+        function EliminateRay(obj)
+           eps = 1e-6;
+           RMS = rms(getRayAmplitude(obj,rayIndex));
+            if RMS < eps
+                obj.rays(rayIndex) = [];
             end
         end
           function DrawRays(obj)
