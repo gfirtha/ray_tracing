@@ -5,17 +5,21 @@ classdef source < handle
     properties
         position
         orientation
+        frequency          
+        excitation_signal
         ray_no
         dirchar
     end
 
     methods
-        function obj = source(position, orientation, ray_no, dirchar)
+        function [obj] = source(position, orientation, ray_no, dirchar,freq,excitation)
             %SOURCE Construct an instance of this class
             %   Detailed explanation goes here
             obj.position = position;
             obj.orientation = orientation;
             obj.ray_no = ray_no;
+            obj.frequency = freq;
+            obj.excitation_signal = excitation;
             switch dirchar
                 case 'monopole'
                     obj.dirchar = @(x) 1;
@@ -28,6 +32,7 @@ classdef source < handle
                 case 'hypercardioid'
                     obj.dirchar = @(x) 1+cos(x)-(1/2)*cos(x);
             end
+            
         end
 
 
@@ -45,28 +50,6 @@ classdef source < handle
         function obj = SetRay_no(obj, NewRay_no)
             obj.position=NewRay_no;
         end
-
-        function RayPackage = GenerateRays(obj)
-            % Generate sound rays from the source in all directions (3D sphere)
-            RayPackage = ray_package();
-            RayPackage.source=obj;
-
-            for i = 1:obj.ray_no
-                % Generate random spherical coordinates (azimuth and elevation).
-                azimuth = 2 * pi * rand(); % Random azimuth angle [0, 2*pi]
-                elevation = asin(2 * rand() - 1); % Random elevation angle [-pi/2, pi/2]
-
-                % Convert spherical coordinates to a 3D direction vector.
-                x = cos(azimuth) * cos(elevation);
-                y = sin(azimuth) * cos(elevation);
-                z = sin(elevation);
-                currentDirection = [x; y; z];
-                % Create a new ray object and add it to the Ray_package.
-                newRay = ray(obj.position, currentDirection , 0, [] , obj.dirchar(azimuth), inf,0);
-                RayPackage.add_ray(newRay); %ide a konstruktorba kéne megadni a frek tengelyt nem?
-            end
-        end
-
 
     end
 

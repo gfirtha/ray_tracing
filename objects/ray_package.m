@@ -8,15 +8,35 @@ classdef ray_package < handle
     end
     
     methods
+        
         function obj = ray_package(source_in)
-            if nargin==0
-                obj.source=[];
-                obj.rays=[];
-        else
             obj.source = source_in;
-            obj.rays=[];
+            obj.rays = [];
+            obj.GenerateRays(obj.source);
         end
+
+
+        function obj = GenerateRays(obj,source)
+            % Generate sound rays from the source in all directions (3D sphere)
+
+            for i = 1:source.ray_no
+                % Generate random spherical coordinates (azimuth and elevation).
+                azimuth = 2 * pi * rand(); % Random azimuth angle [0, 2*pi]
+                elevation = asin(2 * rand() - 1); % Random elevation angle [-pi/2, pi/2]
+                [x,y,z] = sph2cart(azimuth,elevation,1);
+
+                % Create a new ray object and add it to the Ray_package.
+                newRay = ray(source.position, [x,y,z]' , 0, source.excitation_signal*source.dirchar(azimuth), inf,0);
+                obj.add_ray(newRay);
+            end
         end
+        function EliminateRays(obj)
+           RayEnergy = sqrt(sum( (abs([obj.rays(:).amplitude])).^2,1));
+           eps = 1e-6;
+           obj.rays(RayEnergy<eps) = [];
+        end
+
+
 
          function allRays = getRays(obj)
             % Getter function for all rays within the ray package
@@ -62,13 +82,6 @@ classdef ray_package < handle
             for i = 1:nume1(obj.rays)
                 ray = obj.rays(i);
                 ray.EliminiateRay();
-            end
-        end
-        function EliminateRay(obj)
-           eps = 1e-6;
-           RMS = rms(getRayAmplitude(obj,rayIndex));
-            if RMS < eps
-                obj.rays(rayIndex) = [];
             end
         end
           function DrawRays(obj)

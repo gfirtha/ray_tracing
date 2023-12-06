@@ -1,6 +1,5 @@
 classdef scheduler
     properties
-        rays % Store references to all rays
         raypackage
         surfaces % Store references to all surfaces
         clock % Current clock signal
@@ -13,7 +12,6 @@ classdef scheduler
         function obj = scheduler(rayPackages, surfaces, step, freq)
             obj.raypackage = rayPackages;
             obj.surfaces = surfaces;
-            obj.clock = 0; % Initialize the clock
             obj.step = step; % Set the time step duration
             obj.freq_axis = freq;
         end
@@ -41,15 +39,17 @@ classdef scheduler
                                 % függő fázisváltozás
                                 c=343;                                        %TODO:ezekhez majd gettereket és settereket írni
                                 D = norm(intersection - ray.origin);
-                                
-                                
-                                dA = ones(1024,1)*ray.distance./(ray.distance+D);
-                                
+
+                                if ray.propagation_time == 0
+                                    dA = ones(1024,1)/D;
+                                else
+                                    dA = ones(1024,1).*ray.distance./(ray.distance+D);
+                                end
                                 ray.distance = ray.distance+D;
                                 ray.propagation_time = ray.propagation_time+D/c;
                                 %decay factor inicailzálás
 
-                                %tehát itt ez a rész ami kicsit homály, 
+                                %tehát itt ez a rész ami kicsit homály,
                                 %hogy hogyan lehetne frek függővé tenni a delay factort
 
 
@@ -61,7 +61,6 @@ classdef scheduler
                                 % if ray.amplitude<eps
                                 %     EliminateRays;
                                 % end
-                                rayPackage.EliminateRay(rayPackage,j);
                                 surface.reflect(ray, intersection);
                                 break; % Break the loop after reflecting the ray
                             end
@@ -88,9 +87,11 @@ classdef scheduler
                     end
                 end
             end
+
+            rayPackage.EliminateRays;
         end
 
-        
+
     end
 end
 

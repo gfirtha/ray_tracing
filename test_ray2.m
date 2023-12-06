@@ -12,7 +12,7 @@ wall4 = [1,0,0; 1,1,0; 1,1,1; 1,0,1];
 floor = [0,0,0; 1 0 0; 1 1 0; 0 1 0];
 top =   [0,0,1; 1 0 1; 1 1 1; 0 1 1];
 % Scaling factor for the house
-scaling_factor = 1;
+scaling_factor = 4;
 
 % Scale the vertices to create a larger house
 wall1 = scaling_factor * wall1;
@@ -40,28 +40,27 @@ xlabel('x')
 ylabel('y')
 zlabel('z')
 
-
 % Calculate the centroid of the house
 all_vertices = [wall1; wall2; wall3; wall4];
 centroid = mean(all_vertices);
-
-% Create a source at the midpoint of the house
-source_position = centroid;
-source1 = source(source_position, [0, 0, 0], 1, 'monopole');
-hold on
-plot3(source_position(1),source_position(2),source_position(3),'.k','MarkerSize',25)
-hold on
-
-% Generate rays from the source
-rayPackage = source1.GenerateRays();
+%%
 
 fs = 44.1e3;
 Nt = 1024;
 freq = (0:Nt-1)'/Nt*fs;
+exc = ones(size(freq));
 
+% Create a source at the midpoint of the house
+source_position = centroid;
+Source = source(source_position, [0, 0, 0],1, 'monopole', freq, exc);
+rayPackage = ray_package(Source);
+hold on
+plot3(source_position(1),source_position(2),source_position(3),'.k','MarkerSize',25)
+hold on
+%%
 % Propagate the rays in the environment
 Scheduler = scheduler(rayPackage, room0.surfaces, 1, freq); %1 step
-for n = 1 : 100
+for n = 1 : 3
     Scheduler.propagate(); % Simulate ray propagation
 end
 % Display the propagated rays
