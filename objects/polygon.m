@@ -57,7 +57,7 @@ classdef polygon < surface
 
         function draw_surface(obj, transparency)
             if nargin < 2
-                transparency = 0.5; % Set your desired transparency level here
+                transparency = 0.1; % Set your desired transparency level here
             end
 
             patch(obj.vertices(:,1), obj.vertices(:,2), obj.vertices(:,3), 'red', 'FaceAlpha', transparency);

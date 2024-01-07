@@ -3,10 +3,17 @@ close all
 addpath('objects')
 
 
-source1 = source([0,0,0]',[0,1,0]',500,'monopole');
+% source1 = source([0,0,0]',[0,1,0]',500,'monopole');
+% 
+% rayPackage = source1.GenerateRays;
+fs = 44.1e3;
+Nt = 1024;
+freq = (0:Nt-1)'/Nt*fs;
+exc = ones(size(freq));
 
-rayPackage = source1.GenerateRays;
-%%
+Source = source([0,0,0], [0, 0, 0],500, 'dipole', freq, exc);
+rayPackage = ray_package(Source);
+
 figure
 hold on
 rayPackage.DrawRays;

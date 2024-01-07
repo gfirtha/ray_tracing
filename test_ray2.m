@@ -52,7 +52,7 @@ exc = ones(size(freq));
 
 % Create a source at the midpoint of the house
 source_position = centroid;
-Source = source(source_position, [0, 0, 0],1, 'monopole', freq, exc);
+Source = source(source_position, [0, 0, 0],10, 'dipole', freq, exc);
 rayPackage = ray_package(Source);
 hold on
 plot3(source_position(1),source_position(2),source_position(3),'.k','MarkerSize',25)
@@ -60,7 +60,7 @@ hold on
 %%
 % Propagate the rays in the environment
 Scheduler = scheduler(rayPackage, room0.surfaces, 1, freq); %1 step
-for n = 1 : 3
+for n = 1 : 4
     Scheduler.propagate(); % Simulate ray propagation
 end
 % Display the propagated rays

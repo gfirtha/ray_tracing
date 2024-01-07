@@ -88,7 +88,7 @@ classdef scheduler
                 end
             end
 
-            rayPackage.EliminateRays;
+           rayPackage.EliminateRays;
         end
 
 
