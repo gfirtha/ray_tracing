@@ -3,11 +3,13 @@ classdef polygon < surface
     %   Detailed explanation goes here
 
     properties
+        vertices
     end
 
     methods
-        function obj = polygon(vx,alpha,imp,R)
-            obj = obj@surface(vx,alpha,imp,R);
+        function obj = polygon(vx, BC_type, BC_val)
+            obj = obj@surface(BC_type, BC_val);
+            obj.vertices = vx;
         end
 
         function intersection = intersect(obj, ray)

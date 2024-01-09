@@ -13,9 +13,9 @@ classdef room < handle
             obj.speed_of_sound = 343;
         end
         
-        function add_surface(obj,vx, alpha,imp,R)
+        function add_surface(obj,vx, BC_type, BC_val)
             N = length(obj.surfaces);
-            obj.surfaces{N+1} = polygon(vx,alpha,imp,R);
+            obj.surfaces{N+1} = polygon(vx, BC_type, BC_val);
          end
 
         function draw_room(obj)

@@ -1,11 +1,13 @@
 classdef my_sphere < surface
     properties
+        center
         radius
     end
     
     methods
-        function obj = my_sphere(center, radius, alpha,imp,R)
-            obj = obj@surface(center,alpha,imp,R);
+        function obj = my_sphere(center, radius, BC_type,BC_val)
+            obj = obj@surface(BC_type,BC_val);
+            obj.center = center;
             obj.radius = radius;
         end
         
